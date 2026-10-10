@@ -117,17 +117,29 @@ def log_decision(reading, rule_name, action):
 
 
 def main():
-    for tick in range(1, 21):
-        reading = generate_sensor_data()
-        rule_name, action = evaluate_rules(reading, RULES)
-        outcome = take_action(action)
+    machine_alert=[0]*5
+    max_count=0
+    for machine in range(5):
+        count=0
+        for tick in range(1, 11):
+            reading = generate_sensor_data()
+            rule_name, action = evaluate_rules(reading, RULES)
+            outcome = take_action(action)
 
-        print(f"[Tick {tick:02d}] SENSE -> {reading}")
-        print(f"           THINK -> {rule_name}")
-        print(f"           ACT   -> {outcome}\n")
+            print(f"[Tick {tick:02d}] SENSE -> {reading}")
+            print(f"           THINK -> {rule_name}")
+            print(f"           ACT   -> {outcome}\n")
 
-        log_decision(reading, rule_name, action)
-        time.sleep(0.2)
+            if action != "CONTINUE_NORMAL" and action != "WARNING":
+                count+=1
+
+            log_decision(reading, rule_name, action)
+            time.sleep(0.2)
+        if count >= max_count:
+            max_count=count
+            machine_alert[machine]=count
+
+    print("Immediate action required on Machine",*[i+1 for i in range(len(machine_alert)) if machine_alert[i]==max_count])
 
 
 if __name__ == "__main__":
