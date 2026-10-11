@@ -90,10 +90,9 @@ def log_decision(reading, rule_name, action):
 
 
 def main():
-    for i in range(1000):
-        reading = generate_sensor_reading()
-        rule_name, action = evaluate_rules(reading, RULES)
-        log_decision(reading, rule_name, action)
+    reading = generate_sensor_reading()
+    rule_name, action = evaluate_rules(reading, RULES)
+    log_decision(reading, rule_name, action)
 
 
 
