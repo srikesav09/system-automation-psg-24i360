@@ -8,7 +8,6 @@ LOG_FIELDS = SENSOR_FIELDS + ["state"]
 
 
 def generate_sensor_reading():
-    """Simulate a sensor reading."""
     return {
         "temperature": round(random.uniform(20, 95), 1),
         "pressure": round(random.uniform(900, 1200), 1),
