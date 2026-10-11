@@ -5,8 +5,7 @@ from history_data_generator import RULES, evaluate_rules, take_action
 from model import train_model
 
 
-HISTORY_FILE = Path(__file__).parent.parent / "history.csv"
-FEATURES = ["temperature", "pressure", "vibration", "rpm", "current"]
+HISTORY = Path(__file__).parent.parent / "history.csv"
 
 
 def combine_decisions(rule_action, ml_state):
@@ -20,14 +19,15 @@ def combine_decisions(rule_action, ml_state):
 
     return "CONTINUE_NORMAL"
 
+FEATURES = ["temperature", "pressure", "vibration", "rpm", "current"]
 
 def main():
     model = train_model()
 
-    if not HISTORY_FILE.exists():
-        raise FileNotFoundError(f"History file not found: {HISTORY_FILE}")
+    if not HISTORY.exists():
+        raise FileNotFoundError(f"History file not found: {HISTORY}")
 
-    history = pd.read_csv(HISTORY_FILE)
+    history = pd.read_csv(HISTORY)
 
     missing_columns = [column for column in FEATURES if column not in history.columns]
     if missing_columns:

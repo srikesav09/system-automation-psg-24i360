@@ -60,7 +60,7 @@ def evaluate_rules(reading, rules):
 
 
 MESSAGE_MAP = {
-    "STOP_MACHINE": "Warning",
+    "STOP_MACHINE": "Critical",
     "WARNING": "Warning",
     "CONTINUE_NORMAL": "Normal",
     "IGNORE": "Normal",
@@ -90,9 +90,10 @@ def log_decision(reading, rule_name, action):
 
 
 def main():
-    reading = generate_sensor_reading()
-    rule_name, action = evaluate_rules(reading, RULES)
-    log_decision(reading, rule_name, action)
+    for i in range(1000):
+        reading = generate_sensor_reading()
+        rule_name, action = evaluate_rules(reading, RULES)
+        log_decision(reading, rule_name, action)
 
 
 
